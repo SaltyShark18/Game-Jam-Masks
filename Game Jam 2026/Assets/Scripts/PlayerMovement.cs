@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jumping")]
     public float jumpPower = 10f;
-    public static int maxJumps = 1;
+    public static int maxJumps = 2;
     int jumpsRemaining;
 
     [Header("Ground Check")]
