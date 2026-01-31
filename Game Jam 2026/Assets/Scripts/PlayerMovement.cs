@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody2D rb;
+    public Animator animator;
     bool isFacingRight = true;
 
     [Header("Movement")]
@@ -81,6 +82,10 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(horizontalMovement * moveSpeed * speedMultiplyer, rb.velocity.y);
             Flip();
         }
+
+        animator.SetFloat("yVelocity", rb.velocity.y);
+        animator.SetFloat("magnitude", rb.velocity.magnitude);
+        animator.SetBool("isWallsliding", isWallSliding);
     }
 
     public void Move(InputAction.CallbackContext contxet)
@@ -137,11 +142,13 @@ public class PlayerMovement : MonoBehaviour
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpPower);
                 jumpsRemaining--;
+                animator.SetTrigger("jump");
             }
             else if (contxet.canceled && rb.velocity.y > 0)
             {
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
                 jumpsRemaining--;
+                animator.SetTrigger("jump");
             }
         }
 
@@ -151,7 +158,8 @@ public class PlayerMovement : MonoBehaviour
             isWallJumping = true;
             rb.velocity = new Vector2(wallJumpDirection * wallJumpPower.x, wallJumpPower.y);
             wallJumpTimer = 0;
-
+            animator.SetTrigger("jump");
+            
             if (transform.localScale.x != wallJumpDirection)
             {
                 isFacingRight = !isFacingRight;
