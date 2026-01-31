@@ -91,6 +91,7 @@ public class PlayerMovement : MonoBehaviour
     public void Move(InputAction.CallbackContext contxet)
     {
         horizontalMovement = contxet.ReadValue<Vector2>().x;
+        SoundEffectManager.Play("Walk");
     }
 
     // public void SpeedIncrease(float multiplyer)
@@ -143,12 +144,14 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x, jumpPower);
                 jumpsRemaining--;
                 animator.SetTrigger("jump");
+                SoundEffectManager.Play("Jump");
             }
             else if (contxet.canceled && rb.velocity.y > 0)
             {
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
                 jumpsRemaining--;
                 animator.SetTrigger("jump");
+                //SoundEffectManager.Play("Jump");
             }
         }
 
