@@ -13,6 +13,7 @@ public class SpiritMask : MonoBehaviour
     void Start()
     {
         HideSpiritObjects();
+        ShowRealObjects();
     }
 
     // Update is called once per frame
@@ -45,6 +46,7 @@ public class SpiritMask : MonoBehaviour
         }
         //Debug.Log("Spirit Mask On");
         ShowSpiritObjects();
+        HideRealObjects();
     }
 
     void DeactivateSpiritMode()
@@ -56,6 +58,7 @@ public class SpiritMask : MonoBehaviour
         }
         //Debug.Log("Spirit Mask Off");
         HideSpiritObjects();
+        ShowRealObjects();
     }
 
     void ShowSpiritObjects() // activate spirit objects
@@ -74,6 +77,22 @@ public class SpiritMask : MonoBehaviour
         //Debug.Log($"Activated {activatedCount} spirit objects");
     }
 
+    void ShowRealObjects() // activate spirit objects
+    {
+        GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+        int activatedCount = 0;
+
+        foreach (GameObject obj in allObjects)
+        {
+            if (obj.CompareTag("Real") && !obj.activeInHierarchy)
+            {
+                obj.SetActive(true);
+                activatedCount++;
+            }
+        }
+        //Debug.Log($"Activated {activatedCount} spirit objects");
+    }
+
     void HideSpiritObjects() // deactivate spirit objects
     {
         GameObject[] spiritObjects = GameObject.FindGameObjectsWithTag("Spirit");
@@ -84,4 +103,13 @@ public class SpiritMask : MonoBehaviour
         //Debug.Log($"Hidden {spiritObjects.Length} spirit objects");
     }
 
+    void HideRealObjects() // deactivate spirit objects
+    {
+        GameObject[] spiritObjects = GameObject.FindGameObjectsWithTag("Real");
+        foreach (GameObject obj in spiritObjects)
+        {
+            obj.SetActive(false);
+        }
+        //Debug.Log($"Hidden {spiritObjects.Length} spirit objects");
+    }
 }
