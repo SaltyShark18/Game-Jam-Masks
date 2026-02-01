@@ -84,3 +84,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea028c9042d84d141b97792ccbf071a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fireballPrefab: {fileID: 0}
+  firePoint: {fileID: 0}
+  fireballSpeed: 10
+  fireballLifetime: 3
+  fireballCooldown: 1
+  fireballSound: {fileID: 0}

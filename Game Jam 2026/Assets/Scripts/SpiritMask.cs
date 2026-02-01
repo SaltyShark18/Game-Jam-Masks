@@ -25,10 +25,10 @@ public class SpiritMask : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        /*if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             ToggleSpiritMode();
-        }
+        }*/
     }
 
     void CacheAllObjects()      // Cache all objects at start
