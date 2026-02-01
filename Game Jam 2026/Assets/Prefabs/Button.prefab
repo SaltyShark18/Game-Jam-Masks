@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4290400342910339290}
   - component: {fileID: 895160362694943193}
   - component: {fileID: 6858833937188899929}
+  - component: {fileID: -472407175661671673}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -98,3 +99,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetAnimator: {fileID: 0}
+--- !u!114 &-472407175661671673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8023023428339971498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b82f35111d0865f46bdae2fa242563da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressedSprite: {fileID: 0}
+  unpressedSprite: {fileID: 0}
+  stayPressed: 1
+  pressCooldown: 0.5
+  lastPressTime: 0
+  isPressed: 0

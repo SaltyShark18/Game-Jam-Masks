@@ -25,7 +25,7 @@ public class MaskManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SetActiveMask(currentMask);
+        UpdateSpriteSwapper();
     }
 
     // Update is called once per frame
@@ -75,45 +75,27 @@ public class MaskManager : MonoBehaviour
                 break;
         }
         
-        // Play mask switch sound
         SoundEffectManager.Play("MaskSwap");
-        
-        // Update sprite swapper if available
-        if (spriteSwapper != null)
-        {
-            spriteSwapper.ToggleSprites();
-        }
     }
-    
+
     void SetActiveMask(MaskType newMask)
     {
-        // Disable all masks first
-        if (spiritMask != null) spiritMask.enabled = false;
-        //if (timeMask != null) timeMask.enabled = false;
-        if (fireMask != null) fireMask.enabled = false;
-        
-        // Enable the selected mask
         currentMask = newMask;
-        
-        switch (currentMask)
-        {
-            case MaskType.Spirit:
-                if (spiritMask != null) spiritMask.enabled = true;
-                break;
-            case MaskType.Time:
-                if (timeMask != null) timeMask.enabled = true;
-                break;
-            case MaskType.Fire:
-                if (fireMask != null) fireMask.enabled = true;
-                break;
-        }
+
+        // Update sprite swapper
+        UpdateSpriteSwapper();
+
+        Debug.Log($"Switched to {currentMask} Mask");
+    }
+
+    void UpdateSpriteSwapper()
+    {
         if (spriteSwapper != null)
         {
             spriteSwapper.SetMask(currentMask);
         }
-        Debug.Log($"Switched to {currentMask} Mask");
     }
-    
+
     void ActivateCurrentMask()
     {
         switch (currentMask)

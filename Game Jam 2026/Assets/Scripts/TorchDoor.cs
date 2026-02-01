@@ -10,9 +10,9 @@ public class LanternDoor : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Sprite lockedDoorSprite;
     public Sprite unlockedDoorSprite;
-    public Collider2D doorCollider;
     public List<LanternController> linkedTorches = new List<LanternController>();
     private int currentlyLitTorches = 0;
+    private Collider2D blockerCollider;
 
     // Start is called before the first frame update
     void Start()
@@ -28,22 +28,24 @@ public class LanternDoor : MonoBehaviour
             Debug.LogError("NO SPRITE RENDERER FOUND ON DOOR!");
         }
 
-        if (doorCollider == null)
+        blockerCollider = GetComponent<Collider2D>();
+        if (blockerCollider == null)
         {
-            doorCollider = GetComponent<Collider2D>();
-        }
-
-        if (doorCollider != null)
-        {
-            Debug.Log($"Door collider found: {doorCollider.name}. Enabled: {doorCollider.enabled}. IsTrigger: {doorCollider.isTrigger}");
+            Debug.LogError("NO COLLIDER FOUND ON DOOR! Door needs a Collider2D to block player.");
         }
         else
         {
-            Debug.LogWarning("No door collider found!");
+            Debug.Log($"Found door collider: {blockerCollider.name}, IsTrigger: {blockerCollider.isTrigger}");
+
+            // If it's a trigger, it won't block the player - make sure it's NOT a trigger
+            if (blockerCollider.isTrigger)
+            {
+                Debug.LogWarning("Door collider is set as Trigger! It should NOT be a trigger to block player.");
+            }
         }
 
-        Debug.Log($"Torches required: {torchesRequired}");
-        Debug.Log($"Linked torches count: {linkedTorches.Count}");
+        //Debug.Log($"Torches required: {torchesRequired}");
+        //Debug.Log($"Linked torches count: {linkedTorches.Count}");
 
         // Subscribe to all linked torches
         foreach (LanternController torch in linkedTorches)
@@ -92,6 +94,8 @@ public class LanternDoor : MonoBehaviour
     {
         isUnlocked = true;
 
+        SoundEffectManager.Play("DoorOpen");
+
         // Change sprite
         if (spriteRenderer != null && unlockedDoorSprite != null)
         {
@@ -103,20 +107,12 @@ public class LanternDoor : MonoBehaviour
             if (unlockedDoorSprite == null) Debug.LogError("No unlocked door sprite assigned!");
         }
 
-        // Disable collider so player can pass through
-        if (doorCollider != null)
-        {
-            doorCollider.enabled = false;
-        }
-
         Debug.Log("Door unlocked!");
 
-        // Optional: Play sound
-        AudioSource audio = GetComponent<AudioSource>();
-        if (audio != null)
-        {
-            audio.Play();
-        }
+        SoundEffectManager.Play("DoorOpen");
+
+        if (blockerCollider != null)
+            blockerCollider.enabled = false;
     }
 
     void UpdateDoorState()
@@ -160,9 +156,9 @@ public class LanternDoor : MonoBehaviour
             spriteRenderer.sprite = lockedDoorSprite;
         }
 
-        if (doorCollider != null)
+        if (blockerCollider != null)
         {
-            doorCollider.enabled = true;
+            blockerCollider.enabled = true;
         }
     }
 }

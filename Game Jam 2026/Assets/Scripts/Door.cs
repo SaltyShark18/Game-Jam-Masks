@@ -43,10 +43,15 @@ public class Door : MonoBehaviour
     void OpenDoor()
     {
         Debug.Log("Door opened!");
+
+        SoundEffectManager.Play("DoorOpen");
+
         if (openDoorSprite != null)
             GetComponent<SpriteRenderer>().sprite = openDoorSprite;
+
         if (blockerCollider != null)
             blockerCollider.enabled = false;
+
         if (triggerCollider != null)
             triggerCollider.enabled = false;
     }
