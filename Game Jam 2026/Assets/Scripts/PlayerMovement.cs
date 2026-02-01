@@ -10,6 +10,11 @@ public class PlayerMovement : MonoBehaviour
     public Animator animator;
     bool isFacingRight = true;
 
+    public bool isWalking;
+
+     public float movementThreshold = 0.01f;
+
+
     [Header("Movement")]
     public float moveSpeed = 5f;
     float horizontalMovement;
@@ -68,6 +73,17 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+         if (Mathf.Abs(rb.velocity.x) < 0.01f && Mathf.Abs(rb.velocity.y) < 0.01f)
+        {
+            //Debug.Log("stopped");
+            isWalking = false;
+
+        }
+        else
+        {
+            isWalking = true;
+        }
+        
         if (isDashing)
         {
             return;
@@ -92,6 +108,9 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontalMovement = contxet.ReadValue<Vector2>().x;
         SoundEffectManager.Play("Walk");
+        isWalking = true;
+        //Debug.Log("I am walking!");
+
     }
 
     // public void SpeedIncrease(float multiplyer)
