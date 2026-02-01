@@ -30,7 +30,7 @@ public class SpriteSwapper : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.RightShift))
         {
             ToggleSprites();
             SoundEffectManager.Play("MaskSwap");
