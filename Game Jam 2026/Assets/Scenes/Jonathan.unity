@@ -2429,10 +2429,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6545156671868778746, guid: 2968289450c3c85449a1644248666cde, type: 3}
-      propertyPath: requiredKeyAmount
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 7981336167895931763, guid: 2968289450c3c85449a1644248666cde, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.6
@@ -2476,14 +2472,6 @@ PrefabInstance:
     - target: {fileID: 8511274365405024859, guid: 2968289450c3c85449a1644248666cde, type: 3}
       propertyPath: m_Name
       value: Door
-      objectReference: {fileID: 0}
-    - target: {fileID: 8511274365405024859, guid: 2968289450c3c85449a1644248666cde, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8511274365405024859, guid: 2968289450c3c85449a1644248666cde, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2677,10 +2665,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3343156886905049698, guid: 9484a9f6436a02d4b84233d58fbf85b8, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3489979824207598927, guid: 9484a9f6436a02d4b84233d58fbf85b8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.43
@@ -2691,7 +2675,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3489979824207598927, guid: 9484a9f6436a02d4b84233d58fbf85b8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3489979824207598927, guid: 9484a9f6436a02d4b84233d58fbf85b8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2726,14 +2710,6 @@ PrefabInstance:
       value: LanternDoor
       objectReference: {fileID: 0}
     - target: {fileID: 4413539008352075693, guid: 9484a9f6436a02d4b84233d58fbf85b8, type: 3}
-      propertyPath: torchesRequired
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4413539008352075693, guid: 9484a9f6436a02d4b84233d58fbf85b8, type: 3}
-      propertyPath: linkedTorches.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4413539008352075693, guid: 9484a9f6436a02d4b84233d58fbf85b8, type: 3}
       propertyPath: linkedTorches.Array.data[0]
       value: 
       objectReference: {fileID: 8123519206171555580}
@@ -2741,10 +2717,6 @@ PrefabInstance:
       propertyPath: linkedTorches.Array.data[1]
       value: 
       objectReference: {fileID: 1460424137}
-    - target: {fileID: 4413539008352075693, guid: 9484a9f6436a02d4b84233d58fbf85b8, type: 3}
-      propertyPath: linkedTorches.Array.data[2]
-      value: 
-      objectReference: {fileID: 8123519206171555580}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

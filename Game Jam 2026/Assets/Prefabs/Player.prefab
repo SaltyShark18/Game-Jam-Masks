@@ -110,14 +110,14 @@ MonoBehaviour:
   walkRenderer: {fileID: 7509843308013231526}
   allMaskSprites:
   - maskName: Spirit
-    idleSprite: {fileID: -657170383, guid: 074c733e1c5a8164fb95c7a7505aa948, type: 3}
-    walkSprite: {fileID: 618132862, guid: 074c733e1c5a8164fb95c7a7505aa948, type: 3}
-  - maskName: Time
     idleSprite: {fileID: 1845938797, guid: 074c733e1c5a8164fb95c7a7505aa948, type: 3}
     walkSprite: {fileID: -1358461786, guid: 074c733e1c5a8164fb95c7a7505aa948, type: 3}
-  - maskName: Fire
+  - maskName: Time
     idleSprite: {fileID: 1361312451, guid: 074c733e1c5a8164fb95c7a7505aa948, type: 3}
     walkSprite: {fileID: 261592506, guid: 074c733e1c5a8164fb95c7a7505aa948, type: 3}
+  - maskName: Fire
+    idleSprite: {fileID: -657170383, guid: 074c733e1c5a8164fb95c7a7505aa948, type: 3}
+    walkSprite: {fileID: 618132862, guid: 074c733e1c5a8164fb95c7a7505aa948, type: 3}
   defaultIdle: {fileID: 0}
   defaultWalk: {fileID: 0}
 --- !u!1 &3685856510840350685
@@ -195,7 +195,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 618132862, guid: 074c733e1c5a8164fb95c7a7505aa948, type: 3}
+  m_Sprite: {fileID: -1358461786, guid: 074c733e1c5a8164fb95c7a7505aa948, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -700,7 +700,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -657170383, guid: 074c733e1c5a8164fb95c7a7505aa948, type: 3}
+  m_Sprite: {fileID: 1845938797, guid: 074c733e1c5a8164fb95c7a7505aa948, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

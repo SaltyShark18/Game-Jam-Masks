@@ -9,10 +9,7 @@ public class ButtonDoor : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Sprite lockedDoorSprite;
     public Sprite unlockedDoorSprite;
-    public Collider2D doorCollider;
-
-    private AudioSource audioSource;
-    public AudioClip unlockSound;
+    private Collider2D blockerCollider;
 
     public List<ButtonController> linkedButtons = new List<ButtonController>();
     private bool isUnlocked = false;
@@ -22,16 +19,26 @@ public class ButtonDoor : MonoBehaviour
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        audioSource = GetComponent<AudioSource>();
 
         if (spriteRenderer != null)
         {
             lockedDoorSprite = spriteRenderer.sprite;
         }
 
-        if (doorCollider == null)
+        blockerCollider = GetComponent<Collider2D>();
+        if (blockerCollider == null)
         {
-            doorCollider = GetComponent<Collider2D>();
+            Debug.LogError("ButtonDoor: NO COLLIDER FOUND ON DOOR!");
+        }
+        else
+        {
+            Debug.Log($"ButtonDoor: Found collider: {blockerCollider.name}, IsTrigger: {blockerCollider.isTrigger}");
+
+            // If it's a trigger, it won't block the player
+            if (blockerCollider.isTrigger)
+            {
+                Debug.LogWarning("ButtonDoor: Collider is set as Trigger! Should NOT be trigger to block player.");
+            }
         }
 
         Debug.Log($"ButtonDoor {gameObject.name}: Requires {buttonsRequired} button(s)");
@@ -109,23 +116,18 @@ public class ButtonDoor : MonoBehaviour
     {
         isUnlocked = true;
 
+        SoundEffectManager.Play("DoorOpen");
+
         // Change sprite
         if (spriteRenderer != null && unlockedDoorSprite != null)
         {
             spriteRenderer.sprite = unlockedDoorSprite;
         }
 
-        // Disable collider
-        if (doorCollider != null)
-        {
-            doorCollider.enabled = false;
-        }
+        SoundEffectManager.Play("DoorOpen");
 
-        // Play sound
-        if (audioSource != null && unlockSound != null)
-        {
-            audioSource.PlayOneShot(unlockSound);
-        }
+        if (blockerCollider != null)
+            blockerCollider.enabled = false;
 
         Debug.Log($"ButtonDoor {gameObject.name} UNLOCKED!");
     }
@@ -141,9 +143,9 @@ public class ButtonDoor : MonoBehaviour
         }
 
         // Enable collider
-        if (doorCollider != null)
+        if (blockerCollider != null)
         {
-            doorCollider.enabled = true;
+            blockerCollider.enabled = true;
         }
 
         Debug.Log($"ButtonDoor {gameObject.name} LOCKED!");

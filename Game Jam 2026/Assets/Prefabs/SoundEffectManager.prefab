@@ -73,6 +73,9 @@ MonoBehaviour:
   - name: ButtonRelease
     audioClips:
     - {fileID: 8300000, guid: 30e90d08755f0a54ab6ef8869cffc85e, type: 3}
+  - name: DoorOpen
+    audioClips:
+    - {fileID: 8300000, guid: d977f4fdc7909e7418f0caeedf8f05b4, type: 3}
 --- !u!114 &7793573539431661488
 MonoBehaviour:
   m_ObjectHideFlags: 0
