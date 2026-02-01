@@ -8,10 +8,16 @@ public class SpiritMask : MonoBehaviour
     public bool spiritMask = false;
     public AudioSource spiritMaskAudio;
     public AudioSource noMaskAudio;
+    private GameObject player;
+
+    private List<GameObject> spiritObjects = new List<GameObject>();
+    private List<GameObject> realObjects = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        CacheAllObjects();
         HideSpiritObjects();
         ShowRealObjects();
     }
@@ -23,6 +29,15 @@ public class SpiritMask : MonoBehaviour
         {
             ToggleSpiritMode();
         }
+    }
+
+    void CacheAllObjects()      // Cache all objects at start
+    {
+        GameObject[] allSpirit = GameObject.FindGameObjectsWithTag("Spirit");
+        GameObject[] allReal = GameObject.FindGameObjectsWithTag("Real");
+
+        spiritObjects.AddRange(allSpirit);
+        realObjects.AddRange(allReal);
     }
 
     public void ToggleSpiritMode()
@@ -39,77 +54,144 @@ public class SpiritMask : MonoBehaviour
 
     void ActivateSpiritMode()
     {
+        if (spiritMask) return;
+
         spiritMask = true;
+        DetachPlayerIfOnPlatform("Real");
+
         if (!spiritMaskAudio.isPlaying)
         {
             spiritMaskAudio.Play();
         }
         //Debug.Log("Spirit Mask On");
-        ShowSpiritObjects();
-        HideRealObjects();
+        StartCoroutine(SwitchToSpiritWorld());
     }
 
     void DeactivateSpiritMode()
     {
+        if (!spiritMask) return;
+
         spiritMask = false;
+        DetachPlayerIfOnPlatform("Spirit");
+
         if (!noMaskAudio.isPlaying)
         {
             noMaskAudio.Play();
         }
         //Debug.Log("Spirit Mask Off");
+        StartCoroutine(SwitchToRealWorld());
+    }
+
+    IEnumerator SwitchToSpiritWorld()
+    {
+        SetPlatformParenting(false);
+        DetachPlayerFromPlatforms("Real");
+        HideRealObjects();
+        yield return null;
+        ShowSpiritObjects();
+        SetPlatformParenting(true);
+    }
+
+    IEnumerator SwitchToRealWorld()
+    {
+        SetPlatformParenting(false);
+        DetachPlayerFromPlatforms("Spirit");
         HideSpiritObjects();
+        yield return null;
         ShowRealObjects();
+        SetPlatformParenting(true);
     }
 
     void ShowSpiritObjects() // activate spirit objects
     {
-        GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
-        int activatedCount = 0;
-
-        foreach (GameObject obj in allObjects)
+        foreach (GameObject obj in spiritObjects)
         {
-            if (obj.CompareTag("Spirit") && !obj.activeInHierarchy)
+            if (obj != null && !obj.activeSelf)
             {
                 obj.SetActive(true);
-                activatedCount++;
             }
         }
-        //Debug.Log($"Activated {activatedCount} spirit objects");
     }
 
     void ShowRealObjects() // activate spirit objects
     {
-        GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
-        int activatedCount = 0;
-
-        foreach (GameObject obj in allObjects)
+        foreach (GameObject obj in realObjects)
         {
-            if (obj.CompareTag("Real") && !obj.activeInHierarchy)
+            if (obj != null && !obj.activeSelf)
             {
                 obj.SetActive(true);
-                activatedCount++;
             }
         }
-        //Debug.Log($"Activated {activatedCount} spirit objects");
     }
 
     void HideSpiritObjects() // deactivate spirit objects
     {
-        GameObject[] spiritObjects = GameObject.FindGameObjectsWithTag("Spirit");
         foreach (GameObject obj in spiritObjects)
         {
-            obj.SetActive(false);
+            if (obj != null && obj.activeSelf)
+            {
+                if (obj.CompareTag("Player")) continue;
+                obj.SetActive(false);
+            }
         }
-        //Debug.Log($"Hidden {spiritObjects.Length} spirit objects");
     }
 
     void HideRealObjects() // deactivate spirit objects
     {
-        GameObject[] spiritObjects = GameObject.FindGameObjectsWithTag("Real");
-        foreach (GameObject obj in spiritObjects)
+        foreach (GameObject obj in realObjects)
         {
-            obj.SetActive(false);
+            if (obj != null && obj.activeSelf)
+            {
+                if (obj.CompareTag("Player")) continue;
+                obj.SetActive(false);
+            }
         }
-        //Debug.Log($"Hidden {spiritObjects.Length} spirit objects");
+    }
+
+    void DetachPlayerFromPlatforms(string tag)
+    {
+        if (player == null) return;
+
+        Transform currentParent = player.transform.parent;
+
+        while (currentParent != null)
+        {
+            if (currentParent.CompareTag(tag))
+            {
+                player.transform.SetParent(null, true);
+                Debug.Log($"Force-detached player from parent {currentParent.name} with tag {tag}");
+                break;
+            }
+            currentParent = currentParent.parent;
+        }
+    }
+
+    void DetachPlayerIfOnPlatform(string tag)
+    {
+        if (player == null) return;
+
+        Transform playerTransform = player.transform;
+
+        if (playerTransform.parent != null)
+        {
+            GameObject parentObj = playerTransform.parent.gameObject;
+            if (parentObj.CompareTag(tag))
+            {
+                playerTransform.SetParent(null, true);
+
+                Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
+
+                Debug.Log($"Player detached from {tag} platform");
+            }
+        }
+    }
+
+    void SetPlatformParenting(bool allow)
+    {
+        MovingPlatform[] allPlatforms = FindObjectsOfType<MovingPlatform>();
+        foreach (MovingPlatform platform in allPlatforms)
+        {
+            platform.SetParentingEnabled(allow);
+        }
     }
 }
