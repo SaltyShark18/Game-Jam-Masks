@@ -11,10 +11,6 @@ public class ButtonController : MonoBehaviour
     public float pressCooldown = 0.5f;
     public float lastPressTime = 0f;
 
-    private AudioSource audioSource;
-    public AudioClip pressSound;
-    public AudioClip releaseSound;
-
     private SpriteRenderer spriteRenderer;
     public bool isPressed = false;
 
@@ -25,7 +21,6 @@ public class ButtonController : MonoBehaviour
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        audioSource = GetComponent<AudioSource>();
 
         if (spriteRenderer == null)
         {
@@ -71,12 +66,8 @@ public class ButtonController : MonoBehaviour
             spriteRenderer.sprite = pressedSprite;
         }
 
-        // Play sound
-        if (audioSource != null && pressSound != null)
-        {
-            audioSource.PlayOneShot(pressSound);
-        }
-
+        SoundEffectManager.Play("ButtonPress");
+        
         // Notify listeners
         Debug.Log($"Button {gameObject.name} pressed!");
         OnButtonPressed?.Invoke(this);
@@ -99,11 +90,7 @@ public class ButtonController : MonoBehaviour
                 spriteRenderer.sprite = unpressedSprite;
             }
 
-            // Play release sound
-            if (audioSource != null && releaseSound != null)
-            {
-                audioSource.PlayOneShot(releaseSound);
-            }
+            SoundEffectManager.Play("ButtonRelease");
 
             // Notify listeners
             Debug.Log($"Button {gameObject.name} released!");
