@@ -39,6 +39,7 @@ public class FireMask : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && Time.time >= nextFireTime)
         {
             ShootFireball();
+            SoundEffectManager.Play("Shoot");
         }
     }
 
@@ -47,12 +48,6 @@ public class FireMask : MonoBehaviour
         // cooldown
         nextFireTime = Time.time + fireballCooldown;
         
-        // audio.
-        if (fireballSound != null)
-        {
-            fireballSound.Play();
-        }
-
         // instantiate fireball
         if (fireballPrefab != null)
         {
