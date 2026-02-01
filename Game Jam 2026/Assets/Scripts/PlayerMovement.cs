@@ -123,6 +123,7 @@ public class PlayerMovement : MonoBehaviour
         if (contxet.performed && canDash /*&& dashUnlocked*/)
         {
             StartCoroutine(DashCoroutine());
+            SoundEffectManager.Play("Dash");
         }
     }
 
