@@ -47,5 +47,19 @@ public class CheckpointManager : MonoBehaviour
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
         }
+        RestorePlayerHealth(player.gameObject);
+    }
+
+    private void RestorePlayerHealth(GameObject player)
+    {
+        PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+        if (playerHealth != null)
+        {
+            playerHealth.RestoreFullHealth();
+        }
+        else
+        {
+            Debug.LogWarning("No PlayerHealth component found on player!");
+        }
     }
 }

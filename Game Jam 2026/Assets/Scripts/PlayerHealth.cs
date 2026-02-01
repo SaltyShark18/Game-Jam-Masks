@@ -90,7 +90,12 @@ public class PlayerHealth : MonoBehaviour
             currentHealth = maxHealth;
         }
     }
-    
+
+    public void RestoreFullHealth()
+    {
+        currentHealth = maxHealth;
+    }
+
     private IEnumerator FlashRed()
     {
         spriteRenderer.color = Color.red;
