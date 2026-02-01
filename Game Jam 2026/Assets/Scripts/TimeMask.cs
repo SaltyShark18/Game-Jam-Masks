@@ -97,7 +97,7 @@ public class TimeMask : MonoBehaviour
 
         if (!timeMaskAudio.isPlaying)
         {
-            timeMaskAudio.Play();
+            SoundEffectManager.Play("Time Stop");
         }
 
         for (int i = 0; i < allMovingPlatforms.Length; i++)
