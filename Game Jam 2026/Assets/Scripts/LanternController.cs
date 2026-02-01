@@ -32,11 +32,11 @@ public class LanternController : MonoBehaviour
     void ChangeToLitSprite()
     {
         // Ensure the sprite is not already the lit one to avoid redundant calls
-        if (spriteRenderer.sprite != OrangeLantern)
+        if (spriteRenderer.sprite != litSprite)
         {
-            spriteRenderer.sprite = OrangeLantern;
+            spriteRenderer.sprite = litSprite;
             // Optional: Destroy the fireball after it hits the lantern
-            Destroy(collision.gameObject);
+            Destroy(gameObject);
         }
     }
 }
