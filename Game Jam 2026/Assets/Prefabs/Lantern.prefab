@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7466909563377908800}
   - component: {fileID: 7047377677689697961}
   - component: {fileID: 8206059604678649338}
+  - component: {fileID: -3590543606424995707}
   m_Layer: 0
   m_Name: Lantern
   m_TagString: Untagged
@@ -130,3 +131,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.32, y: 0.32}
   m_EdgeRadius: 0
+--- !u!114 &-3590543606424995707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5877746412476355724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1b22c441016b4bb4b0d72f26ac5da61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  litSprite: {fileID: 21300000, guid: 7c8fbf818556a441e9b4a46530ba0546, type: 3}
+  lightingEffect: {fileID: 0}

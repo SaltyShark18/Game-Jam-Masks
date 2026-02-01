@@ -12,7 +12,7 @@ public class LanternController : MonoBehaviour
 
     public System.Action<LanternController> OnLanternLit;
 
-    public GameObject lightingEffect;
+    //public GameObject lightingEffect;
 
     void Start()
     {
