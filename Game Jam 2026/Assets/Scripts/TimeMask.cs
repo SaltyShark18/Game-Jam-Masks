@@ -9,8 +9,9 @@ public class TimeMask : MonoBehaviour
     public bool timeMask = false;
     public AudioSource timeMaskAudio;
     public AudioSource noMaskAudio;
-    private MovingPlatform[] allMovingPlatforms;
-    private float[] originalSpeeds;
+
+    private List<MovingPlatform> allMovingPlatforms = new List<MovingPlatform>();
+    private List<float> originalSpeeds = new List<float>();
     public float slowDownFactor = 0.25f;
 
     public float maxCharge = 7f;    // Max time to freeze
@@ -31,13 +32,7 @@ public class TimeMask : MonoBehaviour
     {
         rechargeRate = maxCharge / rechargeTime;
 
-        allMovingPlatforms = FindObjectsOfType<MovingPlatform>();
-        originalSpeeds = new float[allMovingPlatforms.Length];
-
-        for (int i = 0; i < allMovingPlatforms.Length; i++) // grab all moving platforms into a list
-        {
-            originalSpeeds[i] = allMovingPlatforms[i].moveSpeed;
-        }
+        CacheAllPlatforms();
 
         if (chargeBar != null && chargeBackground != null) // if charge bar present, determine length
         {
@@ -67,10 +62,10 @@ public class TimeMask : MonoBehaviour
             DeactivateTimeMask();
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        /*if (Input.GetKeyDown(KeyCode.R))
         {
             ToggleTimeMask();
-        }
+        }*/
     }
 
     public void ToggleTimeMask()
@@ -100,13 +95,26 @@ public class TimeMask : MonoBehaviour
             SoundEffectManager.Play("Time Stop");
         }
 
-        for (int i = 0; i < allMovingPlatforms.Length; i++)
+        for (int i = 0; i < allMovingPlatforms.Count; i++)
         {
             if (allMovingPlatforms[i] != null)
             {
+                // Store the current speed before slowing (in case it was already modified)
+                if (!timeMask) // Only store original speed on first activation
+                {
+                    originalSpeeds[i] = allMovingPlatforms[i].moveSpeed;
+                }
+
+                // Apply slowdown
                 allMovingPlatforms[i].moveSpeed = originalSpeeds[i] * slowDownFactor;
+
+                Debug.Log($"Slowing platform: {allMovingPlatforms[i].gameObject.name}, " +
+                         $"Tag: {allMovingPlatforms[i].gameObject.tag}, " +
+                         $"Active: {allMovingPlatforms[i].gameObject.activeSelf}, " +
+                         $"New Speed: {allMovingPlatforms[i].moveSpeed}");
             }
         }
+
         Debug.Log("Time Mask Activated");
         UpdateChargeBar();
     }
@@ -122,7 +130,7 @@ public class TimeMask : MonoBehaviour
             noMaskAudio.Play();
         }
 
-        for (int i = 0; i < allMovingPlatforms.Length; i++)
+        for (int i = 0; i < allMovingPlatforms.Count; i++)
         {
             if (allMovingPlatforms[i] != null)
             {
@@ -162,6 +170,62 @@ public class TimeMask : MonoBehaviour
                 if (timeMask)
                 {
                     barImage.color = activeColor;
+                }
+            }
+        }
+    }
+
+    void CacheAllPlatforms()
+    {
+        // Clear lists
+        allMovingPlatforms.Clear();
+        originalSpeeds.Clear();
+
+        // Find ALL objects in the scene including inactive ones
+        GameObject[] allGameObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+
+        foreach (GameObject obj in allGameObjects)
+        {
+            // Only include objects in the current scene (not prefabs)
+            if (obj.scene.IsValid())
+            {
+                MovingPlatform platform = obj.GetComponent<MovingPlatform>();
+                if (platform != null)
+                {
+                    allMovingPlatforms.Add(platform);
+                    originalSpeeds.Add(platform.moveSpeed);
+                }
+            }
+        }
+
+        Debug.Log($"TimeMask: Found {allMovingPlatforms.Count} total moving platforms (including inactive)");
+
+        // Log all platforms found
+        for (int i = 0; i < allMovingPlatforms.Count; i++)
+        {
+            if (allMovingPlatforms[i] != null)
+            {
+                GameObject platformObj = allMovingPlatforms[i].gameObject;
+                Debug.Log($"  Platform {i}: {platformObj.name}, " +
+                         $"Tag: {platformObj.tag}, " +
+                         $"Active: {platformObj.activeSelf}, " +
+                         $"Speed: {originalSpeeds[i]}");
+            }
+        }
+    }
+
+    // Refresh the platform list (call this if new platforms are created at runtime)
+    public void RefreshPlatformList()
+    {
+        CacheAllPlatforms();
+
+        if (timeMask)
+        {
+            for (int i = 0; i < allMovingPlatforms.Count; i++)
+            {
+                if (allMovingPlatforms[i] != null)
+                {
+                    allMovingPlatforms[i].moveSpeed = originalSpeeds[i] * slowDownFactor;
                 }
             }
         }
