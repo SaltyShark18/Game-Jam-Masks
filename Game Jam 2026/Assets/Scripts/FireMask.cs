@@ -36,7 +36,16 @@ public class FireMask : MonoBehaviour
             lastMoveDirection = Mathf.Sign(horizontal);
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && Time.time >= nextFireTime)
+        /*if (Input.GetKeyDown(KeyCode.E) && Time.time >= nextFireTime)
+        {
+            ShootFireball();
+            SoundEffectManager.Play("Shoot");
+        }*/
+    }
+
+    public void ForceShoot()
+    {
+        if (Time.time >= nextFireTime)
         {
             ShootFireball();
             SoundEffectManager.Play("Shoot");
