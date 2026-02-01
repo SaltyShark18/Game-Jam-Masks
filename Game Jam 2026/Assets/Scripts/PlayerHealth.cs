@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 3;
     private int currentHealth;
+    public static event Action<GameObject> OnPlayerDeath;
 
     // public HealthUI healthUI;
 
@@ -82,8 +83,11 @@ public class PlayerHealth : MonoBehaviour
         if (currentHealth <= 0)
         {
             //Will do game over and player is dead.
-            //OnPlayerDeath.Invoke();
-            UnityEngine.Debug.Log("Ohh nooo!!! I have fallen for a not obvious trap and dieeed. NOOOOOOO");
+            if (CheckpointManager.instance != null)
+            {
+                CheckpointManager.instance.RespawnPlayer(transform);
+            }
+            currentHealth = maxHealth;
         }
     }
     

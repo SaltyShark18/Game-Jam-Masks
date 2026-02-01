@@ -6,8 +6,6 @@ public class SpiritMask : MonoBehaviour
 {
     // settings
     public bool spiritMask = false;
-    public AudioSource spiritMaskAudio;
-    public AudioSource noMaskAudio;
     private GameObject player;
 
     private List<GameObject> spiritObjects = new List<GameObject>();
@@ -59,10 +57,6 @@ public class SpiritMask : MonoBehaviour
         spiritMask = true;
         DetachPlayerIfOnPlatform("Real");
 
-        if (!spiritMaskAudio.isPlaying)
-        {
-            spiritMaskAudio.Play();
-        }
         //Debug.Log("Spirit Mask On");
         StartCoroutine(SwitchToSpiritWorld());
     }
@@ -74,10 +68,6 @@ public class SpiritMask : MonoBehaviour
         spiritMask = false;
         DetachPlayerIfOnPlatform("Spirit");
 
-        if (!noMaskAudio.isPlaying)
-        {
-            noMaskAudio.Play();
-        }
         //Debug.Log("Spirit Mask Off");
         StartCoroutine(SwitchToRealWorld());
     }

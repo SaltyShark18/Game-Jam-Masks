@@ -7,8 +7,6 @@ public class TimeMask : MonoBehaviour
 {
     // settings
     public bool timeMask = false;
-    public AudioSource timeMaskAudio;
-    public AudioSource noMaskAudio;
 
     private List<MovingPlatform> allMovingPlatforms = new List<MovingPlatform>();
     private List<float> originalSpeeds = new List<float>();
@@ -90,10 +88,7 @@ public class TimeMask : MonoBehaviour
 
         timeMask = true;
 
-        if (!timeMaskAudio.isPlaying)
-        {
-            SoundEffectManager.Play("Time Stop");
-        }
+        SoundEffectManager.Play("MaskSwap");
 
         for (int i = 0; i < allMovingPlatforms.Count; i++)
         {
@@ -124,11 +119,6 @@ public class TimeMask : MonoBehaviour
         if (!timeMask) return;
 
         timeMask = false;
-
-        if (!noMaskAudio.isPlaying)
-        {
-            noMaskAudio.Play();
-        }
 
         for (int i = 0; i < allMovingPlatforms.Count; i++)
         {
