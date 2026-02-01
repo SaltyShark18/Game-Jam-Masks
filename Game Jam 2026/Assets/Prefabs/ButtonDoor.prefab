@@ -102,7 +102,7 @@ MonoBehaviour:
   buttonsRequired: 1
   requireAllButtons: 1
   unlockedDoorSprite: {fileID: 21300000, guid: ce09ec944cefc43b1a6fff1c41f6f993, type: 3}
-  doorCollider: {fileID: 9084302464768563360}
+  doorCollider: {fileID: 5432210713873729984}
   unlockSound: {fileID: 8300000, guid: d977f4fdc7909e7418f0caeedf8f05b4, type: 3}
   linkedButtons:
   - {fileID: 0}
