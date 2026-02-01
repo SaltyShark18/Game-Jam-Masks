@@ -20,6 +20,7 @@ public class Key : MonoBehaviour
         {
             player = other.transform;
             KeyManager keyManager = player.GetComponent<KeyManager>();
+            SoundEffectManager.Play("Collect");
            
             if (keyManager != null)
             {
