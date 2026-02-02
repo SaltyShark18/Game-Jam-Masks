@@ -8,13 +8,10 @@ public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 3;
     private int currentHealth;
-    public static event Action<GameObject> OnPlayerDeath;
 
     // public HealthUI healthUI;
 
     private SpriteRenderer spriteRenderer;
-
-    //public static event Action OnPlayerDeath;
 
     void Start()
     {
@@ -59,7 +56,7 @@ public class PlayerHealth : MonoBehaviour
         // healthUI.UpdateHearts(currentHealth);
     }
 
-    void ResetHealth()
+    public void ResetHealth()
     {
         currentHealth = maxHealth;
         // healthUI.SetMaxHearts(maxHealth);
@@ -90,7 +87,7 @@ public class PlayerHealth : MonoBehaviour
             currentHealth = maxHealth;
         }
     }
-    
+
     private IEnumerator FlashRed()
     {
         spriteRenderer.color = Color.red;
